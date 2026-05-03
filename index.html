@@ -609,7 +609,7 @@ function updateDashboard() {
     return `
       <div class="member-card" onclick="openMemberView('${m.id}')">
         <div class="member-top">
-          <div class="avatar" style="background:${m.bg};color:${m.color}">${m.name[0]}</div>
+          <div class="avatar" style="background:${m.bg};color:${m.color}">${m.name}</div>
           <div>
             <div class="member-name">${m.name}</div>
             <div class="member-core">${lastCore ? 'On: ' + lastCore.title : 'Not started yet'}</div>
@@ -654,7 +654,7 @@ function renderCoreDetail(id) {
     const modDone = core.modules.filter((_,i) => getModProg(m.id, id, i) === 'completed').length;
     return `
       <tr>
-        <td><span class="member-avatar-sm" style="background:${m.bg};color:${m.color}">${m.name[0]}</span>${m.name}</td>
+        <td><span class="member-avatar-sm" style="background:${m.bg};color:${m.color}">${m.name}</span>${m.name}</td>
         <td>
           <select class="status-sel" onchange="setCoreProg('${m.id}',${id},this.value);toast('Saved')">
             <option value="not_started" ${p==='not_started'?'selected':''}>Not Started</option>
@@ -679,7 +679,7 @@ function renderCoreDetail(id) {
       const mp = getModProg(m.id, id, i);
       const cls = mp==='completed'?'mod-done':mp==='in_progress'?'mod-prog':'mod-none';
       const icon = mp==='completed'?'✓':mp==='in_progress'?'…':'○';
-      return `<button class="mod-member-btn ${cls}" title="Click to cycle ${m.name}'s status" onclick="cycleModProg('${m.id}',${id},${i},this)">${icon} ${m.name[0]}</button>`;
+      return `<button class="mod-member-btn ${cls}" title="Click to cycle ${m.name}'s status" onclick="cycleModProg('${m.id}',${id},${i},this)">${icon} ${m.name}</button>`;
     }).join('');
     const doneCount = MEMBERS.filter(m => getModProg(m.id, id, i) === 'completed').length;
     return `
@@ -748,7 +748,7 @@ function cycleModProg(memberId, coreId, modIdx, btn) {
   const icon = next==='completed'?'✓':next==='in_progress'?'…':'○';
   const m = MEMBERS.find(x => x.id === memberId);
   btn.className = `mod-member-btn ${next==='completed'?'mod-done':next==='in_progress'?'mod-prog':'mod-none'}`;
-  btn.textContent = `${icon} ${m.name[0]}`;
+  btn.textContent = `${icon} ${m.name}`;
   // Update count label
   const modItem = btn.closest('.module-item');
   if (modItem) {
@@ -870,7 +870,7 @@ function renderAssignmentsList() {
     if (a.due) { const diff = new Date(a.due) - new Date(); if (diff < 0) dueClass = 'due-past'; else if (diff < 3*86400000) dueClass = 'due-soon'; }
     const subs = MEMBERS.map(m => `
       <div class="sub-item">
-        <span class="sub-name"><span class="member-avatar-sm" style="background:${m.bg};color:${m.color};width:22px;height:22px;font-size:0.65rem">${m.name[0]}</span>${m.name}</span>
+        <span class="sub-name"><span class="member-avatar-sm" style="background:${m.bg};color:${m.color};width:22px;height:22px;font-size:0.65rem">${m.name}</span>${m.name}</span>
         <span class="sub-toggle ${a.submissions[m.id]?'done':''}" onclick="toggleSub(${a.id},'${m.id}')">
           ${a.submissions[m.id]?'✓ Done':'○ Pending'}
         </span>
